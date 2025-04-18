@@ -24,11 +24,12 @@ from tkinter import ttk, filedialog, messagebox
 SEMESTER_START = date(2025, 1, 13)
 SEMESTER_END = date(2025, 5, 9)
 TOTAL_PAGES = 258
-INITIAL_PAGE = 145
+INITIAL_PAGE = 0  # Default if no saved page exists
 
 # ------------------ File Paths ------------------ #
 COMPLETED_FILE = "completed_problems.json"
 UPLOAD_DIR = "uploaded_documents"
+CONFIG_FILE = "tracker_config.json"
 
 # ------------------ Data Structures ------------------ #
 # Dictionary of chapters and their associated problems
@@ -84,6 +85,51 @@ def save_completed_problems(data):
             json.dump(data, f, indent=2)
     except Exception as e:
         messagebox.showerror("Save Error", f"Failed to save progress: {e}")
+
+def load_config():
+    """
+    Load configuration settings from a local JSON file.
+    
+    Returns:
+        dict: Dictionary containing configuration settings.
+              Default configuration if file doesn't exist or has invalid format.
+    """
+    default_config = {
+        "current_page": INITIAL_PAGE
+    }
+    
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r") as f:
+                config = json.load(f)
+                # Ensure all expected keys exist
+                for key in default_config:
+                    if key not in config:
+                        config[key] = default_config[key]
+                return config
+        except json.JSONDecodeError:
+            print("Warning: Could not decode config file")
+            return default_config
+        except Exception as e:
+            print(f"Error loading config: {e}")
+            return default_config
+    else:
+        # File doesn't exist yet, create it with defaults
+        save_config(default_config)
+        return default_config
+
+def save_config(config):
+    """
+    Save configuration settings to a local JSON file.
+    
+    Args:
+        config (dict): Dictionary containing configuration settings
+    """
+    try:
+        with open(CONFIG_FILE, "w") as f:
+            json.dump(config, f, indent=2)
+    except Exception as e:
+        messagebox.showerror("Save Error", f"Failed to save configuration: {e}")
 
 # ------------------ UI Update Functions ------------------ #
 def update_treeview():
@@ -173,12 +219,21 @@ def update_page():
     """
     Update the current page from the entry widget.
     Validates input to ensure it's a valid integer within range.
+    Saves the updated page to the configuration file.
     """
     global current_page
     try:
         new_page = int(page_entry.get())
         if 0 <= new_page <= TOTAL_PAGES:
             current_page = new_page
+            
+            # Save the updated page to configuration
+            config = load_config()
+            config["current_page"] = current_page
+            save_config(config)
+            
+            # Update UI to reflect changes
+            update_widget()
         else:
             messagebox.showwarning("Invalid Input", f"Page number must be between 0 and {TOTAL_PAGES}")
             page_entry.delete(0, tk.END)
@@ -311,7 +366,8 @@ def open_document():
 if __name__ == "__main__":
     # Initialize data
     completed_problems = load_completed_problems()
-    current_page = INITIAL_PAGE
+    config = load_config()
+    current_page = config.get("current_page", INITIAL_PAGE)
     TOTAL_SEMESTER_DAYS = (SEMESTER_END - SEMESTER_START).days
     
     # Create and configure root window
@@ -352,7 +408,7 @@ if __name__ == "__main__":
     page_entry = ttk.Entry(entry_frame, width=8, font=("Arial", 12))
     page_entry.pack(side=tk.LEFT)
     page_entry.insert(0, str(current_page))
-    update_btn = ttk.Button(entry_frame, text="Update", command=lambda: [update_page(), update_widget()])
+    update_btn = ttk.Button(entry_frame, text="Update", command=update_page)
     update_btn.pack(side=tk.LEFT, padx=5)
     
     # Problems Frame
