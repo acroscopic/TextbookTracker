@@ -1,40 +1,47 @@
-# QFT Progress Tracker
+# Textbook Progress Tracker (TPT)
 
-A Tkinter-based application for tracking progress through Peskin & Schroeder's "Quantum Field Theory" textbook.
+#         _            _        _       
+#        /\ \         /\ \     /\ \     
+#        \_\ \       /  \ \    \_\ \    
+#        /\__ \     / /\ \ \   /\__ \   
+#       / /_ \ \   / / /\ \_\ / /_ \ \  
+#      / / /\ \ \ / / /_/ / // / /\ \ \ 
+#     / / /  \/_// / /__\/ // / /  \/_/ 
+#    / / /      / / /_____// / /        
+#   / / /      / / /      / / /         
+#  /_/ /      / / /      /_/ /          
+#  \_\/       \/_/       \_\/           
 
-![QFT Progress Tracker Screenshot](screenshots/screenshot.png)
+
+A Tkinter-based application for tracking progress through textbooks for academics or personal use
+
+![TPT](screenshots/main.png)
 
 ## Features
-
-- **Semester Progress Tracking**: Visual display of elapsed time and remaining days in the semester
+- **Multiple textbooks**: Keep track of multiple textbooks, all saved locally
+- **Progress Tracking**: Visual display of elapsed time and remaining days in the semester or your personal deadline
 - **Textbook Progress**: Track your current page and compare it with expected progress
 - **Problem Completion**: Mark problems as complete or incomplete
-- **Document Management**: Upload and open solution documents for each problem
 - **Status Indicators**: Color-coded feedback on whether you're ahead or behind schedule
 
-## Installation
-
-1. Clone this repository:
-   ```
-   git clone https://github.com/yourusername/qft-progress-tracker.git
-   cd qft-progress-tracker
-   ```
+## Usage
 
 2. Run the application:
    ```
    python progress_tracker.py
    ```
 
-## Configuration
-
-You can modify the following parameters at the top of the script:
-
-- `SEMESTER_START`: Start date of your semester/course
-- `SEMESTER_END`: End date of your semester/course
-- `TOTAL_PAGES`: Total number of pages in the textbook
-- `INITIAL_PAGE`: Your current page when starting the tracker
-
 ## Usage
+
+
+### Add a new textbook
+
+![NewTextbook](screenshots/NewTextbook.png)
+
+1. Enter in the books title, author, and page count information
+2. Consider your starting date and what date you'd like to be finished
+3. Copy the chapter problems, following the example format
+
 
 ### Tracking Reading Progress
 
@@ -46,15 +53,13 @@ You can modify the following parameters at the top of the script:
 
 1. Navigate through the chapter tree to find problems
 2. Select a problem and click "Mark as Complete" when finished
-3. Upload your solution document (optional)
-4. Open the document later for review
+3. Open the document later for review
 
 ## Data Storage
 
 The application stores your progress locally:
 
-- `completed_problems.json`: Records which problems you've completed
-- `uploaded_documents/`: Directory containing copies of your uploaded solution files
+- `textbooks.json`
 
 ## Requirements
 
@@ -71,5 +76,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Acknowledgments
 
-- Peskin & Schroeder for their excellent QFT textbook
-- All physics students struggling through QFT problems
+- tank321 for his excellent code and hard work through Peskin and Schroeter's QFT
+- All students struggling through difficult textbooks
