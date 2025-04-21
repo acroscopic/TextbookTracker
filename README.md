@@ -1,16 +1,4 @@
-# Textbook Progress Tracker (TPT)
-
-         _            _        _       
-        /\ \         /\ \     /\ \     
-        \_\ \       /  \ \    \_\ \    
-        /\__ \     / /\ \ \   /\__ \   
-       / /_ \ \   / / /\ \_\ / /_ \ \  
-      / / /\ \ \ / / /_/ / // / /\ \ \ 
-     / / /  \/_// / /__\/ // / /  \/_/ 
-    / / /      / / /_____// / /        
-   / / /      / / /      / / /         
-  /_/ /      / / /      /_/ /          
-  \_\/       \/_/       \_\/           
+# Textbook Progress Tracker (TPT)   
 
 
 A Tkinter-based application for tracking progress through textbooks for academics or personal use
